@@ -30,7 +30,7 @@ io.gamesight.AWSGlue.ExampleJob.main(Array(
 
 ### Usage
 
-We suggest that you start with ExampleJob.scala as the boilerplate for development. There is some additional handling for stage separation that allows the script to run locally. The calls to `Job` functions should only run during executions within the AWS Glue environment. Additionally, `dev` is passed to the `--stage` argument, the example adds local configuration to the `SparkContext` without affecting deployed executions. The example can be executed either locally or deployed, as long as the arguments are passed.
+We suggest that you start with ExampleJob.scala as the boilerplate for development. There is some additional handling for stage separation that allows the script to run locally. The calls to `Job` functions should only run during executions within the AWS Glue environment. Additionally, when `dev` is passed to the `--stage` argument, the example adds local configuration to the `SparkContext` without affecting deployed executions. The example can be executed either locally or deployed, as long as the correct arguments are passed.
 
 NOTE: Testing locally should be done with a small data set. Local executions do not have the parallelism benefits of a true distributed cluster. Instead, the local testing works on a single-node cluster.
 
