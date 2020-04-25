@@ -1,0 +1,6 @@
+target
+project
+.metals
+.bloop
+node_modules
+.serverless
