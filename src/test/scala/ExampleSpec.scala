@@ -1,5 +1,5 @@
 /******************************************************************************\
- * An class that runs a local execution of an AWS Glue job within a scalatest.*
+ * An class that runs a local execution of an AWS Glue job within a scalatest *
  * Instead of running our local executions, it is preferred to call them from *
  * a test framework, where we are able to add assertions for verification.    *
  *                                                                            *
