@@ -1,3 +1,16 @@
+/******************************************************************************\
+ * An example that includes all necessary boilerplate code for a deployable   *
+ * AWS Glue job script in Scala that can also be tested locally with          *
+ * scalatest and sbt. The script reads JSON objects into a DataFrame from an  *
+ * S3 DataSource, inspects and prints the schema, and then writes it as       *
+ * parquet to another S3 location                                             *
+ *                                                                            *
+ * Org: Gamesight - https://gamesight.io                                      *
+ * Author: jeremy@gamesight.io                                                *
+ * License: MIT                                                               *
+ * Copyright (c) 2020 Gamesight                                               *
+\******************************************************************************/
+
 package io.gamesight.AWSGlue
 
 import com.amazonaws.services.glue.util.JsonOptions
@@ -11,6 +24,13 @@ object ExampleJob {
 
   def main(sysArgs: Array[String]): Unit = {
     // Read in the arguments
+    // JOB_NAME - is usually supplied automatically by AWS but must be included in the test
+    // DO NOT OVERRIDE JOB_NAME IN DEPLOYED CODE
+    // stage - the stage of production. Suggested values: "dev", "staging", "prod"
+    // inputBucket - the bucket the DataSource will read from
+    // inputPrefix - the specific prefix (must end in "/") for the source
+    // outputBucket - the bucket the DataSink will write to
+    // outputPrefix - the prefix to prepend to files when writing
     val args = GlueArgParser.getResolvedOptions(
       sysArgs,
       Seq(

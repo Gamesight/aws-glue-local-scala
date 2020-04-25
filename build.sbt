@@ -3,7 +3,7 @@ ThisBuild / organization := "io.gamesight"
 
 lazy val glueetl = (project in file("."))
   .settings(
-    name := "gamesight-glue-etl",
+    name := "aws-glue-local-scala",
     resolvers ++= Seq(
       "aws-glue-etl-artifacts" at "https://aws-glue-etl-artifacts.s3.amazonaws.com/release/"
     ),
