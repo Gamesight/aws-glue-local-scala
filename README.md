@@ -11,7 +11,7 @@ This is a tool to develop and test AWS Glue scripts written in Scala. It uses SB
 
 1. Clone the repository.
 2. Update the test.  
-Update the following portion of ExampleSpec.scala with real S3 bucket names and prefixes that you are have privileges to use (List, Read, Write).
+Update the following portion of ExampleSpec.scala with real S3 bucket names and prefixes that you have privileges to use (List, Read, Write).
 ```
 io.gamesight.AWSGlue.ExampleJob.main(Array(
   "--JOB_NAME", "job",
