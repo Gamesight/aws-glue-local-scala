@@ -42,7 +42,7 @@ In order to deploy your glue job, either copy and paste the contents of your tes
 
 ### How to Collaborate
 
-If you have questions or ideas, feel free to post issues or email jeremy@gamesight.io
+If you have questions or ideas, feel free to post issues.
 
 ### About Us
 
