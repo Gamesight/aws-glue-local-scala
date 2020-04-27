@@ -10,11 +10,6 @@
 \******************************************************************************/
 
 import org.scalatest._
-import com.amazonaws.services.glue.util.GlueArgParser
-import java.lang.Runtime
-import java.lang.Process
-import org.scalamock.scalatest.MockFactory
-import com.amazonaws.services.glue.util.Job
 
 class ExampleSpec extends FunSpec {
   describe("Example") {
