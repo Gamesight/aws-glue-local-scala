@@ -38,7 +38,34 @@ NOTE: Testing locally should be done with a small data set. Local executions do 
 
 ### Deployment
 
-In order to deploy your glue job, either copy and paste the contents of your tested script using the AWS console, or upload the script to S3 using your preferred deployment tool.
+In order to deploy your glue job, either copy and paste the contents of your tested script using the AWS console, or upload the script to S3 using your preferred deployment tool.  
+
+The following yaml template has all of the necessary Cloudformation details for deployment.
+
+```
+ExampleGlueJob:
+  Type: AWS::Glue::Job
+  Properties:
+    Name: example-job
+    Role: !Ref <IAM ROLE THAT THE JOB WILL ASSUME>
+    GlueVersion: "1.0"
+    ExecutionProperty:
+      MaxConcurrentRuns : 1
+    Command:
+      Name: glueetl
+      ScriptLocation:
+        Fn::Join:
+          - ""
+          - - s3://
+            - <YOUR SCRIPT BUCKET>/
+            - <YOUR SCRIPT PREFIX>/
+            - ExampleJob.scala
+    DefaultArguments:
+      "--stage": <YOUR DEPLOYMENT STAGE>
+      "--job-language": scala
+      "--class": io.gamesight.AWSGlue.ExampleJob
+      "--TempDir": s3://<YOUR BUCKET>/temp/
+```
 
 ### How to Collaborate
 
