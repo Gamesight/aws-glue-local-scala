@@ -1,6 +1,6 @@
 # AWS GLUE LOCAL SCALA
 
-This is a tool to develop and test AWS Glue scripts written in Scala. It uses SBT to manage the necessary resources for local testing. It was inspired by the documentation on locally testing Glue here: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-libraries.html which suggests local installations of packages and running with the Maven. At Gamesight, we wanted something that we could easily integrate into our CI/CD systems. This tool enables us to do that.
+This is a tool to develop and test AWS Glue scripts written in Scala. It uses SBT to manage the necessary resources for local testing. It was inspired by the documentation on locally testing Glue here: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-libraries.html which suggests local installations of packages and running with Maven. At Gamesight, we wanted something that we could easily integrate into our CI/CD systems. This tool enables us to do that.
 
 ### Dependencies
 * Java 8 - Later versions of Java will not work with AWS Glue
