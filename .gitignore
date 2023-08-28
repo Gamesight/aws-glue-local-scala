@@ -2,3 +2,7 @@ target
 project
 .metals
 .bloop
+.idea
+.vscode
+.bsp
+.github

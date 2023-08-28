@@ -1,76 +1,50 @@
 # AWS GLUE LOCAL SCALA
 
-This is a tool to develop and test AWS Glue scripts written in Scala. It uses SBT to manage the necessary resources for local testing. It was inspired by the documentation on locally testing Glue here: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-libraries.html which suggests local installations of packages and running with Maven. At Gamesight, we wanted something that we could easily integrate into our CI/CD systems. This tool enables us to do that.
-
-### Dependencies
-* Java 8 - Later versions of Java will not work with AWS Glue
-* SBT Version 1.3.10 - get it here https://www.scala-sbt.org/index.html
-* Scala 2.11.1 or later
+This is a tool to develop and test [AWS Glue] scripts written in Scala. It uses SBT to manage the necessary resources for local testing. 
+It supports Glue 3.0
 
 ### Setup
 
-1. Clone the repository.
-2. Update the test.  
-Update the following portion of ExampleSpec.scala with real S3 bucket names and prefixes that you have privileges to use (List, Read, Write).
-```
-io.gamesight.AWSGlue.ExampleJob.main(Array(
-  "--JOB_NAME", "job",
-  "--stage", "dev",
-  "--inputBucket", "<YOUR BUCKET NAME>",
-  "--outputBucket", "<YOUR OUTPUT BUCKET NAME>",
-  "--inputPrefix", "<YOUR INPUT PREFIX>",
-  "--outputPrefix", "<YOUR OUTPUT PREFIX>"
-))
-```
-3. Compile the package.  
-`sbt clean compile`
-4. Verify that your AWS credentials are active
-5. Run the test example.  
-`sbt test`
+Download the needed dependencies (scala, sbt, maven, **java JDK 8**). 
+
+If you are using IntelliJ, get the [Scala plugin] and the [sbt plugin].
+
+I highly recommend you install [scalafmt], to automatically format your code and keep it clean.
+
+### Working with Scala and sbt
+Scala is a modern programming language, which is compatible with Java. SBT (Scala Build Tool) is a build tool for Scala projects, used to manage dependencies, compile code, run tests, and package applications.
+
+To interact with your project, cd to your root and run `sbt` to open the sbt shell. Once the shell is open, you can run:
+- `compile`: Compile the source code
+- `run`: Run the main application
+- `test`: Run tests in the project
+- `clean`: Clean project
+- `reload`: reload project
+- `update`: apply changes to the `build.sbt` file
+- `reload; update;`: run consecutive commands at once
+- `exit`: exit the shell
 
 ### Usage
 
-We suggest that you start with ExampleJob.scala as the boilerplate for development. There is some additional handling for stage separation that allows the script to run locally. The calls to `Job` functions should only run during executions within the AWS Glue environment. Additionally, when `dev` is passed to the `--stage` argument, the example adds local configuration to the `SparkContext` without affecting deployed executions. The example can be executed either locally or deployed, as long as the correct arguments are passed.  
+Start with ExampleJob.scala as the boilerplate for development. There is some additional handling for stage separation that allows the script to run locally. The calls to `Job` functions should only run during executions within the AWS Glue environment. Additionally, when `dev` is passed to the `--stage` argument, the example adds local configuration to the `SparkContext` without affecting deployed executions. The example can be executed either locally or deployed, as long as the correct arguments are passed.
 
-While it is possible to run ExampleJob or any user-defined job from the command line with `sbt "run <args here>"`, we suggest that executions are triggered from within a testing framework. The example uses http://www.scalatest.org/ which allows easy control over the main class arguments and gives the ability to add assertions. This also fits with our goal of being able to integrate AWS Glue job scripts into a CI/CD flow.  
-
-NOTE: Testing locally should be done with a small data set. Local executions do not have the parallelism benefits of a true distributed cluster. Instead, the local testing works on a single-node cluster.
+You should test your script locally with test cases, to avoid incurring costs by running the actual job to debug.
 
 ### Deployment
 
-In order to deploy your glue job, either copy and paste the contents of your tested script using the AWS console, or upload the script to S3 using your preferred deployment tool.  
+In order to deploy your glue job, you have 2 choices:
+- Create a Glue ETL job in the AWS console, configure it to use Glue 3.0 and spark with Scala, then copy and paste the contents of your tested script into the job. 
+  - Make sure you run `compile` before copy pasting the script.
+  - Make sure you add the job argument `--stage` 
+  - If you get NoClassDef errors, make sure you add the following argument for the job to find your class deinfition:
+    `--class` with the value`com.fares.AWSGlue.GlueApp`
+- Create the Glue ETL Job and upload the script to S3 using [AWS CDK]
 
-The following yaml template has all of the necessary Cloudformation details for deployment.
 
-```
-ExampleGlueJob:
-  Type: AWS::Glue::Job
-  Properties:
-    Name: example-job
-    Role: !Ref <IAM ROLE THAT THE JOB WILL ASSUME>
-    GlueVersion: "1.0"
-    ExecutionProperty:
-      MaxConcurrentRuns : 1
-    Command:
-      Name: glueetl
-      ScriptLocation:
-        Fn::Join:
-          - ""
-          - - s3://
-            - <YOUR SCRIPT BUCKET>/
-            - <YOUR SCRIPT PREFIX>/
-            - ExampleJob.scala
-    DefaultArguments:
-      "--stage": <YOUR DEPLOYMENT STAGE>
-      "--job-language": scala
-      "--class": io.gamesight.AWSGlue.ExampleJob
-      "--TempDir": s3://<YOUR BUCKET>/temp/
-```
 
-### How to Collaborate
 
-If you have questions or ideas, feel free to post issues.
-
-### About Us
-
-Visit https://gamesight.io/ to learn more.
+[AWS Glue]: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-scala.html
+[Scala plugin]: https://plugins.jetbrains.com/plugin/1347-scala
+[sbt plugin]: https://plugins.jetbrains.com/plugin/5007-sbt
+[AWS CDK]: https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html
+[scalafmt]: https://scalameta.org/scalafmt/
