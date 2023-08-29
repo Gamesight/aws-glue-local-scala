@@ -6,3 +6,5 @@ project
 .vscode
 .bsp
 .github
+.DS_Store
+*.DS_Store

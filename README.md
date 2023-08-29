@@ -1,6 +1,6 @@
 # AWS GLUE LOCAL SCALA
 
-This is a tool to develop and test [AWS Glue] scripts written in Scala. It uses SBT to manage the necessary resources for local testing. 
+This is a template package to develop and test [AWS Glue] scripts written in Scala. It uses SBT to manage the necessary resources for local testing. 
 It supports Glue 3.0
 
 ### Setup
